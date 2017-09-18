@@ -7,6 +7,9 @@ import sys
 # Import pygal for graphing statistics
 import pygal
 
+# Import datetime for dating files
+import datetime
+
 
 # Print count of VPN logins by sorted username
 def print_login_counts(filename):
@@ -14,6 +17,11 @@ def print_login_counts(filename):
 
     for key in sorted(logins.keys()):
         print key, logins[key]
+
+def get_date():
+    today = datetime.datetime.today()
+    format = "%m-%d-%y_%H%M%S"
+    return today.strftime(format)
 
 # Print count of VPN logins sorted by most logins by username
 # and create gprah of logins
@@ -28,7 +36,7 @@ def print_top_counts(filename):
         line_chart.add(login, logins[login])
         print login, logins[login]
 
-    line_chart.render_to_file('OpenVPN_Logins.svg')
+    line_chart.render_to_file('OpenVPN_Logins.svg_%s') % get_date()
 
 # Print top 10 most VPN logins by username and make graph
 def print_top_10(filename):
@@ -53,9 +61,11 @@ def print_top_10(filename):
         line_chart.add(login, logins[login])
         print login, logins[login]
 
-    print "\nSaving Top 10 Logins chart to file OpenVPN_Logins_Top10.svg"
+    filename = "OpenVPN_Logins_Top10_" + get_date()
 
-    line_chart.render_to_file('OpenVPN_Logins_Top10.svg')
+    print "\nSaving Top 10 Logins chart to file %s" % filename
+
+    line_chart.render_to_file(filename)
 
 # Function to read OpenVPN.log and return dictionary of usernames and login
 # count
@@ -128,7 +138,7 @@ def vpn_logins_by_month(filename):
     month_chart.title = "VPN Login Count by Month"
     month_chart.x_title = "Logins"
 
-    for month in months:
+    for month in logins_by_month:
         month_chart.add(month, logins_by_month.get(month, 0))
         print month, logins_by_month.get(month, 0)
 
