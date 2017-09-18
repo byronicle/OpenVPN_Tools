@@ -113,20 +113,6 @@ def tls_key_error(filename):
 def vpn_logins_by_month(filename):
     vpn_logins_list = successful_logins(filename)
 
-    months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-            ]
-
     logins_by_month = {}
     regex = r'Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec'
     for line in vpn_logins_list:
